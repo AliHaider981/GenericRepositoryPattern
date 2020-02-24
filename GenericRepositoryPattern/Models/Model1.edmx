@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MySchooDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Chapters">
+          <Key>
+            <PropertyRef Name="ChapterId" />
+          </Key>
+          <Property Name="ChapterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChapterNo" Type="int" Nullable="false" />
+          <Property Name="ChapterName" Type="nvarchar(max)" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="ClassId" />
+          </Key>
+          <Property Name="ClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="MCQS">
+          <Key>
+            <PropertyRef Name="MCQSId" />
+          </Key>
+          <Property Name="MCQSId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Statment" Type="nvarchar(max)" />
+          <Property Name="A" Type="nvarchar(max)" />
+          <Property Name="B" Type="nvarchar(max)" />
+          <Property Name="C" Type="nvarchar(max)" />
+          <Property Name="D" Type="nvarchar(max)" />
+          <Property Name="Ans" Type="nvarchar(max)" />
+          <Property Name="Board" Type="bit" Nullable="false" />
+          <Property Name="BoardName" Type="nvarchar(max)" />
+          <Property Name="Exercise" Type="bit" Nullable="false" />
+          <Property Name="Book" Type="bit" Nullable="false" />
+          <Property Name="ChaptertId" Type="int" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="ClasstId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="SubjectId" />
+          </Key>
+          <Property Name="SubjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_Chapters_dbo_Subjects_SubjectId">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Chapters" Type="Self.Chapters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="Chapters">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MCQS_dbo_Chapters_ChaptertId">
+          <End Role="Chapters" Type="Self.Chapters" Multiplicity="1" />
+          <End Role="MCQS" Type="Self.MCQS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chapters">
+              <PropertyRef Name="ChapterId" />
+            </Principal>
+            <Dependent Role="MCQS">
+              <PropertyRef Name="ChaptertId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MCQS_dbo_Classes_ClasstId">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+          <End Role="MCQS" Type="Self.MCQS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="MCQS">
+              <PropertyRef Name="ClasstId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MCQS_dbo_Subjects_SubjectId">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="MCQS" Type="Self.MCQS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="MCQS">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Subjects_dbo_Classes_ClassId">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MySchooDataModelStoreContainer">
+          <EntitySet Name="Chapters" EntityType="Self.Chapters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MCQS" EntityType="Self.MCQS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Chapters_dbo_Subjects_SubjectId" Association="Self.FK_dbo_Chapters_dbo_Subjects_SubjectId">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Chapters" EntitySet="Chapters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MCQS_dbo_Chapters_ChaptertId" Association="Self.FK_dbo_MCQS_dbo_Chapters_ChaptertId">
+            <End Role="Chapters" EntitySet="Chapters" />
+            <End Role="MCQS" EntitySet="MCQS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MCQS_dbo_Classes_ClasstId" Association="Self.FK_dbo_MCQS_dbo_Classes_ClasstId">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="MCQS" EntitySet="MCQS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MCQS_dbo_Subjects_SubjectId" Association="Self.FK_dbo_MCQS_dbo_Subjects_SubjectId">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="MCQS" EntitySet="MCQS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Subjects_dbo_Classes_ClassId" Association="Self.FK_dbo_Subjects_dbo_Classes_ClassId">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MySchooDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Chapter">
+          <Key>
+            <PropertyRef Name="ChapterId" />
+          </Key>
+          <Property Name="ChapterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChapterNo" Type="Int32" Nullable="false" />
+          <Property Name="ChapterName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SubjectId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK_dbo_Chapters_dbo_Subjects_SubjectId" FromRole="Chapters" ToRole="Subjects" />
+          <NavigationProperty Name="MCQS" Relationship="Self.FK_dbo_MCQS_dbo_Chapters_ChaptertId" FromRole="Chapters" ToRole="MCQS" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="ClassId" />
+          </Key>
+          <Property Name="ClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MCQS" Relationship="Self.FK_dbo_MCQS_dbo_Classes_ClasstId" FromRole="Classes" ToRole="MCQS" />
+          <NavigationProperty Name="Subjects" Relationship="Self.FK_dbo_Subjects_dbo_Classes_ClassId" FromRole="Classes" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="MCQ">
+          <Key>
+            <PropertyRef Name="MCQSId" />
+          </Key>
+          <Property Name="MCQSId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Statment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="A" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="B" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="C" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="D" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Board" Type="Boolean" Nullable="false" />
+          <Property Name="BoardName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Exercise" Type="Boolean" Nullable="false" />
+          <Property Name="Book" Type="Boolean" Nullable="false" />
+          <Property Name="ChaptertId" Type="Int32" Nullable="false" />
+          <Property Name="SubjectId" Type="Int32" Nullable="false" />
+          <Property Name="ClasstId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Chapter" Relationship="Self.FK_dbo_MCQS_dbo_Chapters_ChaptertId" FromRole="MCQS" ToRole="Chapters" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_dbo_MCQS_dbo_Classes_ClasstId" FromRole="MCQS" ToRole="Classes" />
+          <NavigationProperty Name="Subject" Relationship="Self.FK_dbo_MCQS_dbo_Subjects_SubjectId" FromRole="MCQS" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="SubjectId" />
+          </Key>
+          <Property Name="SubjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Chapters" Relationship="Self.FK_dbo_Chapters_dbo_Subjects_SubjectId" FromRole="Subjects" ToRole="Chapters" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_dbo_Subjects_dbo_Classes_ClassId" FromRole="Subjects" ToRole="Classes" />
+          <NavigationProperty Name="MCQS" Relationship="Self.FK_dbo_MCQS_dbo_Subjects_SubjectId" FromRole="Subjects" ToRole="MCQS" />
+        </EntityType>
+        <Association Name="FK_dbo_Chapters_dbo_Subjects_SubjectId">
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Chapters" Type="Self.Chapter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="Chapters">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MCQS_dbo_Chapters_ChaptertId">
+          <End Role="Chapters" Type="Self.Chapter" Multiplicity="1" />
+          <End Role="MCQS" Type="Self.MCQ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chapters">
+              <PropertyRef Name="ChapterId" />
+            </Principal>
+            <Dependent Role="MCQS">
+              <PropertyRef Name="ChaptertId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MCQS_dbo_Classes_ClasstId">
+          <End Role="Classes" Type="Self.Class" Multiplicity="1" />
+          <End Role="MCQS" Type="Self.MCQ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="MCQS">
+              <PropertyRef Name="ClasstId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Subjects_dbo_Classes_ClassId">
+          <End Role="Classes" Type="Self.Class" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="ClassId" />
+            </Principal>
+            <Dependent Role="Subjects">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MCQS_dbo_Subjects_SubjectId">
+          <End Role="Subjects" Type="Self.Subject" Multiplicity="1" />
+          <End Role="MCQS" Type="Self.MCQ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="SubjectId" />
+            </Principal>
+            <Dependent Role="MCQS">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DataContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Chapters" EntityType="Self.Chapter" />
+          <EntitySet Name="Classes" EntityType="Self.Class" />
+          <EntitySet Name="MCQS" EntityType="Self.MCQ" />
+          <EntitySet Name="Subjects" EntityType="Self.Subject" />
+          <AssociationSet Name="FK_dbo_Chapters_dbo_Subjects_SubjectId" Association="Self.FK_dbo_Chapters_dbo_Subjects_SubjectId">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Chapters" EntitySet="Chapters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MCQS_dbo_Chapters_ChaptertId" Association="Self.FK_dbo_MCQS_dbo_Chapters_ChaptertId">
+            <End Role="Chapters" EntitySet="Chapters" />
+            <End Role="MCQS" EntitySet="MCQS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MCQS_dbo_Classes_ClasstId" Association="Self.FK_dbo_MCQS_dbo_Classes_ClasstId">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="MCQS" EntitySet="MCQS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Subjects_dbo_Classes_ClassId" Association="Self.FK_dbo_Subjects_dbo_Classes_ClassId">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Subjects" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MCQS_dbo_Subjects_SubjectId" Association="Self.FK_dbo_MCQS_dbo_Subjects_SubjectId">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="MCQS" EntitySet="MCQS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MySchooDataModelStoreContainer" CdmEntityContainer="DataContext">
+          <EntitySetMapping Name="Chapters">
+            <EntityTypeMapping TypeName="MySchooDataModel.Chapter">
+              <MappingFragment StoreEntitySet="Chapters">
+                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+                <ScalarProperty Name="ChapterNo" ColumnName="ChapterNo" />
+                <ScalarProperty Name="ChapterName" ColumnName="ChapterName" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="MySchooDataModel.Class">
+              <MappingFragment StoreEntitySet="Classes">
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MCQS">
+            <EntityTypeMapping TypeName="MySchooDataModel.MCQ">
+              <MappingFragment StoreEntitySet="MCQS">
+                <ScalarProperty Name="MCQSId" ColumnName="MCQSId" />
+                <ScalarProperty Name="Statment" ColumnName="Statment" />
+                <ScalarProperty Name="A" ColumnName="A" />
+                <ScalarProperty Name="B" ColumnName="B" />
+                <ScalarProperty Name="C" ColumnName="C" />
+                <ScalarProperty Name="D" ColumnName="D" />
+                <ScalarProperty Name="Ans" ColumnName="Ans" />
+                <ScalarProperty Name="Board" ColumnName="Board" />
+                <ScalarProperty Name="BoardName" ColumnName="BoardName" />
+                <ScalarProperty Name="Exercise" ColumnName="Exercise" />
+                <ScalarProperty Name="Book" ColumnName="Book" />
+                <ScalarProperty Name="ChaptertId" ColumnName="ChaptertId" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="ClasstId" ColumnName="ClasstId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="MySchooDataModel.Subject">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
