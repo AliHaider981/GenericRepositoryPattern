@@ -132,6 +132,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClassController.cs" />
+    <Compile Include="Controllers\SubjectsController.cs" />
     <Compile Include="DAL\AllRepository.cs" />
     <Compile Include="DAL\_IAllRepository.cs" />
     <Compile Include="Global.asax.cs">
@@ -180,6 +181,11 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Class\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Subjects\Create.cshtml" />
+    <Content Include="Views\Subjects\Delete.cshtml" />
+    <Content Include="Views\Subjects\Details.cshtml" />
+    <Content Include="Views\Subjects\Edit.cshtml" />
+    <Content Include="Views\Subjects\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

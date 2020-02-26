@@ -46,7 +46,13 @@ namespace GenericRepositoryPattern.DAL
 
         public void UpdateModel(T model)
         {
-            _context.Entry(model).State = EntityState.Modified; 
+            _context.Entry(model).State = EntityState.Modified;
         }
+
+        public IEnumerable<Class> GetAllClass()
+        {
+            return _context.Classes.ToList();
+        }
+
     }
 }
